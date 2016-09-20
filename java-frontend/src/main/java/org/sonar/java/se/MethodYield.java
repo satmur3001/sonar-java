@@ -49,7 +49,7 @@ public class MethodYield {
 
   @Override
   public String toString() {
-    return "{params: " + Arrays.toString(parametersConstraints) + ", result: " + resultConstraint + " (" + resultIndex + ")}";
+    return "{params: " + Arrays.toString(parametersConstraints) + ", result: " + resultConstraint + " (" + resultIndex + "), exceptional: " + exception + "}";
   }
 
   public List<ProgramState> statesAfterInvocation(List<SymbolicValue> invocationArguments, ProgramState programState, Supplier<SymbolicValue> svSupplier) {
@@ -82,9 +82,6 @@ public class MethodYield {
       results.addAll(programStates);
     }
 
-    if (exception) {
-      return results;
-    }
     // applied all constraints from parameters, stack return value
     SymbolicValue sv;
     if (resultIndex < 0) {
