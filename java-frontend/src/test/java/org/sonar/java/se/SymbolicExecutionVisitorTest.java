@@ -95,6 +95,18 @@ public class SymbolicExecutionVisitorTest {
   }
 
   @Test
+  public void method_behavior_handling_finally() {
+    SymbolicExecutionVisitor sev = createSymbolicExecutionVisitor("src/test/resources/se/ReturnAndFinally.java");
+    assertThat(sev.behaviorCache.entrySet()).hasSize(2);
+
+    MethodBehavior foo = sev.behaviorCache.get(sev.behaviorCache.keySet().iterator().next());
+    // FIXME there should be one exceptional yield and 2 normal yields
+    assertThat(foo.yields()).hasSize(2);
+    assertThat(foo.yields().stream().filter(y -> !y.exception).count()).isEqualTo(1);
+    assertThat(foo.yields().stream().filter(y -> y.exception).count()).isEqualTo(1);
+  }
+
+  @Test
   public void explore_method_with_recursive_call() throws Exception {
     SymbolicExecutionVisitor sev = createSymbolicExecutionVisitor("src/test/resources/se/RecursiveCall.java");
     assertThat(sev.behaviorCache.entrySet()).hasSize(1);
