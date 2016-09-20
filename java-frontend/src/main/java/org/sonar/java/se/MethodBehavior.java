@@ -55,7 +55,7 @@ public class MethodBehavior {
     }
 
     if (!isConstructor() && !isVoidMethod()) {
-      SymbolicValue resultSV = programState.peekValue();
+      SymbolicValue resultSV = programState.returnValue();
       if (resultSV != null) {
         yield.resultIndex = parameterSymbolicValues.indexOf(resultSV);
         yield.resultConstraint = programState.getConstraint(resultSV);
