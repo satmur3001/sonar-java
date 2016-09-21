@@ -116,16 +116,14 @@ public class MethodYield {
       return false;
     }
     MethodYield other = (MethodYield) obj;
-    if (!Arrays.equals(parametersConstraints, other.parametersConstraints)) {
+    if (!Arrays.equals(parametersConstraints, other.parametersConstraints)
+      || exception != other.exception
+      || resultIndex != other.resultIndex) {
       return false;
     }
-    if (resultConstraint == null) {
-      if (other.resultConstraint != null) {
-        return false;
-      }
-    } else if (!resultConstraint.equals(other.resultConstraint) || resultIndex != other.resultIndex) {
-      return false;
+    if (resultConstraint != null) {
+      return resultConstraint.equals(other.resultConstraint);
     }
-    return true;
+    return other.resultConstraint == null;
   }
 }
