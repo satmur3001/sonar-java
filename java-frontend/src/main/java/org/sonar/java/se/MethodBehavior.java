@@ -59,6 +59,9 @@ public class MethodBehavior {
       if (resultSV != null) {
         yield.resultIndex = parameterSymbolicValues.indexOf(resultSV);
         yield.resultConstraint = programState.getConstraint(resultSV);
+      } else {
+        // if there is no return value but we are not in a void method or constructor, we are not in a happy path
+        yield.exception = true;
       }
     }
 
